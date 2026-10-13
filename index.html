@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexis Castro | Educador, Escritor, Investigador y Desarrollador Web</title>
+
+    <!-- Script preventivo anti-parpadeo de tema (FOUC) -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Suave transición al alternar entre temas */
+        html.theme-transition,
+        html.theme-transition *,
+        html.theme-transition *::before,
+        html.theme-transition *::after {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease, fill 0.2s ease, box-shadow 0.3s ease !important;
+        }
+
+        /* Estilo para el fondo desenfocado de las ventanas modales */
+        dialog::backdrop {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-brand-600 selection:text-white transition-colors duration-300">
+
+    <header
+        class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo / Name -->
+                <a href="#inicio" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition-transform overflow-hidden"
+                        style="border-radius: 50%;">
+                        <img src="Img/Logo.jpeg" alt="Lic. Alexis Castro - Perfil Profesional"
+                            class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Alexis Castro</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav
+                    class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <a href="#inicio"
+                        class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Inicio</a>
+                    <a href="#sobre-mi" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Sobre
+                        Mí</a>
+                    <a href="#libros"
+                        class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Libros</a>
+                    <a href="#cursos"
+                        class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Cursos</a>
+                    <a href="#proyectos"
+                        class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Proyectos</a>
+                    <a href="#contacto"
+                        class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Contacto</a>
+                </nav>
+
+                <!-- Actions: Botón de Tema + CTA Button Header -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Botón Selector de Tema Claro / Oscuro (Desktop) -->
+                    <button id="theme-toggle-desktop" type="button" aria-label="Cambiar tema claro u oscuro"
+                        title="Cambiar tema claro u oscuro"
+                        class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100/90 dark:bg-slate-800/90 text-slate-600 dark:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm flex items-center justify-center cursor-pointer">
+                        <i class="theme-toggle-dark-icon fa-solid fa-sun text-lg hidden"></i>
+                        <i class="theme-toggle-light-icon fa-solid fa-moon text-lg hidden"></i>
+                    </button>
+
+                    <a href="#cursos"
+                        class="px-5 py-2.5 rounded-xl bg-brand-600 text-white font-medium text-sm shadow-sm hover:bg-brand-700 transition-all transform hover:-translate-y-0.5">
+                        Ver Cursos
+                    </a>
+                </div>
+
+                <!-- Controles en versión móvil: Botón de Tema + Menú Hamburguesa -->
+                <div class="flex items-center space-x-2 md:hidden">
+                    <!-- Botón Selector de Tema Claro / Oscuro (Mobile) -->
+                    <button id="theme-toggle-mobile" type="button" aria-label="Cambiar tema claro u oscuro"
+                        title="Cambiar tema claro u oscuro"
+                        class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100/90 dark:bg-slate-800/90 text-slate-600 dark:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm flex items-center justify-center cursor-pointer">
+                        <i class="theme-toggle-dark-icon fa-solid fa-sun text-base hidden"></i>
+                        <i class="theme-toggle-light-icon fa-solid fa-moon text-base hidden"></i>
+                    </button>
+
+                    <button id="mobile-menu-btn" aria-label="Abrir menú de navegación"
+                        class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none transition-colors">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3 shadow-lg transition-colors">
+            <a href="#inicio"
+                class="block py-2 text-slate-700 dark:text-slate-200 font-medium hover:text-brand-600 dark:hover:text-brand-400">Inicio</a>
+            <a href="#sobre-mi"
+                class="block py-2 text-slate-700 dark:text-slate-200 font-medium hover:text-brand-600 dark:hover:text-brand-400">Sobre
+                Mí</a>
+            <a href="#libros"
+                class="block py-2 text-slate-700 dark:text-slate-200 font-medium hover:text-brand-600 dark:hover:text-brand-400">Libros</a>
+            <a href="#cursos"
+                class="block py-2 text-slate-700 dark:text-slate-200 font-medium hover:text-brand-600 dark:hover:text-brand-400">Cursos</a>
+            <a href="#proyectos"
+                class="block py-2 text-slate-700 dark:text-slate-200 font-medium hover:text-brand-600 dark:hover:text-brand-400">Proyectos</a>
+            <a href="#contacto"
+                class="block py-2 text-slate-700 dark:text-slate-200 font-medium hover:text-brand-600 dark:hover:text-brand-400">Contacto</a>
+            <div class="pt-2">
+                <a href="#cursos"
+                    class="block text-center w-full py-3 rounded-xl bg-brand-600 text-white font-medium shadow-sm hover:bg-brand-700 transition-colors">Ver
+                    Cursos</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio"
+        class="pt-32 pb-20 md:pt-44 md:pb-32 bg-gradient-to-b from-brand-50/50 via-white to-slate-50 dark:from-slate-900/80 dark:via-slate-950 dark:to-slate-950 overflow-hidden transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div
+                        class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-brand-100 dark:bg-brand-950/80 text-brand-700 dark:text-brand-300 border border-transparent dark:border-brand-800/40 text-xs font-semibold tracking-wide uppercase">
+                        <span class="w-2 h-2 rounded-full bg-brand-600 dark:bg-brand-400 animate-pulse"></span>
+                        <span>Educación & Tecnología de Vanguardia</span>
+                    </div>
+                    <h1
+                        class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                        Transformando el aprendizaje a través de la <span
+                            class="text-brand-600 dark:text-indigo-400">tecnología y la educación</span>
+                    </h1>
+                    <p
+                        class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal">
+                        Licenciado en Ciencias de la Educación, Investigador y Docente Profesional especializado en
+                        herramientas tecnológicas educativas y metodologías de aprendizaje digital.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#cursos"
+                            class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-600 text-white font-semibold text-center shadow-lg shadow-brand-600/25 hover:bg-brand-700 transition-all transform hover:-translate-y-0.5">
+                            Ver mis Cursos <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#libros"
+                            class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-semibold text-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                            Explorar mis Libros
+                        </a>
+                    </div>
+                    <!-- Trust indicators -->
+                    <div
+                        class="pt-6 flex items-center justify-center lg:justify-start space-x-8 text-slate-500 dark:text-slate-400 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-graduation-cap text-brand-600 dark:text-brand-400 text-lg"></i>
+                            <span>+5,000 Alumnos</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-book text-brand-600 dark:text-brand-400 text-lg"></i>
+                            <span>4 Libros en Amazon</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image / Visual -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-72 h-72 sm:w-96 sm:h-96">
+                        <!-- Decorative background blob -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-brand-600 to-indigo-400 rounded-3xl rotate-6 opacity-20 dark:opacity-30 blur-xl">
+                        </div>
+                        <div
+                            class="absolute inset-0 border-2 border-brand-200 dark:border-brand-500/30 rounded-3xl -rotate-3">
+                        </div>
+                        <!-- Main Photo -->
+                        <div
+                            class="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-800">
+                            <img src="Img/Yo.jpg" alt="Lic. Alexis Castro - Perfil Profesional"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <!-- Floating badge -->
+                        <div
+                            class="absolute -bottom-6 -left-6 bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 flex items-center space-x-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Estado actual</p>
+                                <p class="text-sm font-bold text-slate-800 dark:text-white">Educador Activo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre-mi"
+        class="py-24 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span
+                    class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-wider">Autoridad
+                    Académica</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Sobre Mí &
+                    Formación</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-lg">Combinando la pedagogía tradicional con
+                    tecnologías avanzadas para formar a la próxima generación de profesionales y desarrolladores.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Bio & Journey -->
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Resumen Biográfico</h3>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-base">
+                        Soy educador por vocación e investigador tecnológico por convicción. A lo largo de más de 5 años
+                        en la docencia, he guiado a miles de estudiantes a cruzar la brecha entre la teoría académica y
+                        el desarrollo profesional. Mi enfoque metodológico se basa en el aprendizaje activo y la
+                        resolución de problemas reales.
+                    </p>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-base">
+                        Como escritor y autor, busco democratizar el acceso a herramientas tecnológicas educativas de
+                        alto nivel mediante libros accesibles y cursos en línea estructurados científicamente.
+                    </p>
+
+                    <!-- Academic Achievements -->
+                    <div class="space-y-4 pt-4">
+                        <h4 class="text-lg font-semibold text-slate-900 dark:text-white">Formación Académica</h4>
+
+                        <div
+                            class="flex items-start space-x-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 hover:border-brand-300 dark:hover:border-brand-500 transition-colors">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0 font-bold text-lg">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-slate-900 dark:text-white">Licenciado en Pedagogía de la
+                                    Informática</h5>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Especialización en Tecnologías de
+                                    la Información y Comunicación Aplicadas.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-start space-x-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 hover:border-brand-300 dark:hover:border-brand-500 transition-colors">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 font-bold text-lg">
+                                <i class="fa-solid fa-spinner animate-spin"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <h5 class="font-bold text-slate-900 dark:text-white">Estudiante de Maestría en
+                                        Pedagogía de las Ciencias Experimentales</h5>
+                                    <span
+                                        class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">En
+                                        Curso</span>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Investigación enfocada en
+                                    transformar la práctica educativa.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="pt-4 flex items-center space-x-4">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Conecta conmigo:</span>
+                        <a href="https://www.linkedin.com/in/alexis-castro-ba1384203/" target="_blank"
+                            rel="noopener noreferrer" aria-label="LinkedIn"
+                            class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-brand-600 dark:hover:bg-brand-600 hover:text-white dark:hover:text-white flex items-center justify-center transition-all shadow-sm">
+                            <i class="fa-brands fa-linkedin-in text-lg"></i>
+                        </a>
+                        <a href="https://instagram.com/alexiscastro_academy" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram"
+                            class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-pink-600 dark:hover:bg-pink-600 hover:text-white dark:hover:text-white flex items-center justify-center transition-all shadow-sm">
+                            <i class="fa-brands fa-instagram text-lg"></i>
+                        </a>
+                        <a href="https://facebook.com/share/1E9YzjM4jB" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook"
+                            class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-900 dark:hover:bg-slate-700 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                            <i class="fa-brands fa-facebook text-lg"></i>
+                        </a>
+                        <a href="https://tiktok.com/@alexiscastro_academy" target="_blank" rel="noopener noreferrer"
+                            aria-label="TikTok"
+                            class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-900 dark:hover:bg-slate-700 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                            <i class="fa-brands fa-tiktok text-lg"></i>
+                        </a>
+                        <a href="https://github.com/Alexis645-tech" target="_blank" rel="noopener noreferrer"
+                            aria-label="GitHub"
+                            class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-900 dark:hover:bg-slate-700 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                            <i class="fa-brands fa-github text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Stats / Visual Card -->
+                <div
+                    class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-brand-900 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden border border-slate-800 dark:border-slate-700/80">
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-brand-600 rounded-full blur-3xl opacity-30">
+                    </div>
+                    <div class="relative z-10 space-y-8">
+                        <div class="flex items-center justify-between">
+                            <span class="text-brand-300 font-semibold tracking-wider uppercase text-xs">Métricas de
+                                Impacto</span>
+                            <i class="fa-solid fa-chart-line text-brand-400 text-xl"></i>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10">
+                                <p class="text-3xl font-extrabold text-white">5+</p>
+                                <p class="text-xs text-brand-200 mt-1">Años de experiencia docente</p>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10">
+                                <p class="text-3xl font-extrabold text-white">4</p>
+                                <p class="text-xs text-brand-200 mt-1">Libros publicados en Amazon</p>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10">
+                                <p class="text-3xl font-extrabold text-white">+5</p>
+                                <p class="text-xs text-brand-200 mt-1">Cursos impartidos online</p>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10">
+                                <p class="text-3xl font-extrabold text-white">99%</p>
+                                <p class="text-xs text-brand-200 mt-1">Satisfacción de alumnos</p>
+                            </div>
+                        </div>
+                        <div class="pt-2">
+                            <a href="#contacto"
+                                class="block w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-medium text-center transition-colors shadow-md">
+                                Agenda una Asesoría
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="libros"
+        class="py-24 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-wider">Sección
+                    Comercial</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Mis Libros
+                    Publicados en Amazon</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-lg">Guías prácticas y metáforas académicas diseñadas
+                    para acelerar tu dominio técnico y pedagógico.</p>
+            </div>
+
+            <!-- Grid of 4 Books -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Book 1 -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-slate-200 dark:border-slate-800 group">
+                    <div>
+                        <div
+                            class="w-full h-64 rounded-2xl overflow-hidden mb-6 bg-slate-100 dark:bg-slate-800 shadow-inner relative">
+                            <img src="Img/Portada.jpeg" alt="Portada Libro 1"
+                                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                            <span
+                                class="absolute top-3 right-3 bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">Bestseller</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-2 line-clamp-1">Geometría del
+                            Tiempo</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 font-medium">Amazon Kindle & Tapa
+                            Blanda</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">Imagínese el encuentro no
+                            como una suma de días o mensajes, sino como un problema de topología.</p>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-slate-100 dark:border-slate-800">
+                        <a href="https://www.amazon.es/dp/B0HKKBC6F9" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-medium text-center text-sm hover:bg-brand-600 dark:hover:bg-brand-600 transition-colors shadow-sm border border-transparent dark:border-slate-700">
+                            <i class="fa-brands fa-amazon mr-2"></i> Comprar en Amazon
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-slate-200 dark:border-slate-800 group">
+                    <div>
+                        <div
+                            class="w-full h-64 rounded-2xl overflow-hidden mb-6 bg-slate-100 dark:bg-slate-800 shadow-inner relative">
+                            <img src="Img/Ebook.jpg" alt="Portada Libro 2"
+                                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-2 line-clamp-1">Geometría del
+                            Número</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 font-medium">Amazon Kindle & Tapa
+                            Blanda</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">Hay números que no cuentan,
+                            sino que callan. Geometrías que no se trazan, sino que se intuyen en la distancia de lo que
+                            fuimos.</p>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-slate-100 dark:border-slate-800">
+                        <a href="https://www.amazon.es/dp/B0HL3RYW4T" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-medium text-center text-sm hover:bg-brand-600 dark:hover:bg-brand-600 transition-colors shadow-sm border border-transparent dark:border-slate-700">
+                            <i class="fa-brands fa-amazon mr-2"></i> Comprar en Amazon
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-slate-200 dark:border-slate-800 group">
+                    <div>
+                        <div
+                            class="w-full h-64 rounded-2xl overflow-hidden mb-6 bg-slate-100 dark:bg-slate-800 shadow-inner relative">
+                            <img src="Img/Educacion.jpg" alt="Portada Libro 3"
+                                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                            <span
+                                class="absolute top-3 right-3 bg-emerald-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">Nuevo</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-2 line-clamp-1">Deconstruyendo la
+                            Educación</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 font-medium">Amazon Kindle & Tapa
+                            Blanda</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">Vivimos bajo el espeluzno de
+                            que la escolarización formal es un gran igualador. Es hora de disipar el espeluzno y
+                            construir el aula del futuro.</p>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-slate-100 dark:border-slate-800">
+                        <a href="https://www.amazon.es/dp/B0HL53WDLF" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-medium text-center text-sm hover:bg-brand-600 dark:hover:bg-brand-600 transition-colors shadow-sm border border-transparent dark:border-slate-700">
+                            <i class="fa-brands fa-amazon mr-2"></i> Comprar en Amazon
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-slate-200 dark:border-slate-800 group">
+                    <div>
+                        <div
+                            class="w-full h-64 rounded-2xl overflow-hidden mb-6 bg-slate-100 dark:bg-slate-800 shadow-inner relative flex items-center justify-center">
+                            <div
+                                class="w-full h-full bg-gradient-to-br from-slate-800 to-indigo-950 flex flex-col items-center justify-center text-slate-400 p-4 text-center">
+                                <i class="fa-solid fa-book-bookmark text-4xl text-brand-400 mb-2"></i>
+                                <span class="text-sm font-semibold text-slate-200">Próximo Lanzamiento</span>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-2 line-clamp-1">Próximamente...
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 font-medium">Amazon Tapa Blanda</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">Nueva obra editorial en
+                            proceso de investigación y redacción académica.</p>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-slate-100 dark:border-slate-800">
+                        <a href="https://amazon.com" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-medium text-center text-sm hover:bg-brand-600 dark:hover:bg-brand-600 transition-colors shadow-sm border border-transparent dark:border-slate-700">
+                            <i class="fa-brands fa-amazon mr-2"></i> Ver en Amazon
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cursos"
+        class="py-24 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-wider">Oferta
+                    Educativa</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Cursos
+                    Online Especializados</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-lg">Programas intensivos orientados a resultados
+                    profesionales con soporte directo y certificación.</p>
+            </div>
+
+            <!-- Grid of Courses -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Course 1 (Excel - Featured) -->
+                <div
+                    class="bg-slate-50 dark:bg-slate-800/60 rounded-3xl p-8 border-2 border-brand-600 dark:border-brand-500 flex flex-col justify-between shadow-xl relative transform md:-translate-y-2">
+                    <div
+                        class="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-brand-600 dark:bg-brand-500 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow">
+                        Más Popular
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-6 pt-2">
+                            <span
+                                class="px-3 py-1 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 font-semibold text-xs uppercase">OFFICE
+                                Pro</span>
+                            <span class="text-slate-900 dark:text-white font-extrabold text-2xl">$20 USD</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Gestión Administrativa y
+                            Análisis de Datos con Excel</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm mb-6 leading-relaxed">
+                            Convierte datos desorganizados en decisiones estratégicas y reportes gerenciales impecables
+                            con el curso "Gestión Administrativa y Análisis de Datos con Excel".
+                        </p>
+                        <div class="space-y-2 mb-6 text-sm text-slate-700 dark:text-slate-300">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-brand-600 dark:text-brand-400"></i>
+                                <span><strong>Dirigido a:</strong> Perfiles Administrativos, Financieros y
+                                    Emprendedores.</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-brand-600 dark:text-brand-400"></i>
+                                <span><strong>Beneficio:</strong> Integridad de Datos, Automatización y Síntesis
+                                    Analítica.</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-brand-600 dark:text-brand-400"></i>
+                                <span>Certificado oficial avalado por Hotmart con código QR.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="https://domina-excel.netlify.app" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3.5 rounded-xl bg-brand-600 text-white font-semibold text-center hover:bg-brand-700 transition-colors shadow-md">
+                            Inscribirme al Curso <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 2 (Word) -->
+                <div
+                    class="bg-slate-50 dark:bg-slate-800/60 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 flex flex-col justify-between hover:border-brand-300 dark:hover:border-brand-500 hover:shadow-xl transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span
+                                class="px-3 py-1 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 font-semibold text-xs uppercase">OFFICE
+                                Pro</span>
+                            <span class="text-slate-900 dark:text-white font-extrabold text-2xl">$20 USD</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Redacción Corporativa y
+                            Documentación Técnica con Word</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm mb-6 leading-relaxed">
+                            Domina la estandarización de la documentación organizacional y eleva el nivel de la
+                            comunicación profesional en su empresa con el curso "Redacción Corporativa y Documentación
+                            Técnica con Word".
+                        </p>
+                        <div class="space-y-2 mb-6 text-sm text-slate-700 dark:text-slate-300">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-brand-600 dark:text-brand-400"></i>
+                                <span><strong>Dirigido a:</strong> RRHH, Asistentes de Gerencia, Secretariado y
+                                    Funcionarios.</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-brand-600 dark:text-brand-400"></i>
+                                <span><strong>Beneficio:</strong> Productividad, Estandarización, Automatización y
+                                    Control.</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-brand-600 dark:text-brand-400"></i>
+                                <span>Certificado oficial avalado por Hotmart con código QR.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="https://domina-word.netlify.app/" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3.5 rounded-xl bg-brand-600 text-white font-semibold text-center hover:bg-brand-700 transition-colors shadow-sm">
+                            Inscribirme al Curso <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proyectos"
+        class="py-24 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span
+                    class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-wider">Portafolio
+                    Técnico</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Proyectos
+                    y Repositorio GitHub</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-lg">Demostración práctica de código abierto
+                    resolviendo problemas reales del ecosistema educativo y digital.</p>
+            </div>
+
+            <!-- Grid of 3 Main GitHub Projects -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project: Plataforma Virtual E-Learning -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-800 flex flex-col justify-between group hover:shadow-xl transition-all duration-300">
+                    <div>
+                        <div class="h-64 bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+                            <img src="Img/elearning.jpg" alt="Plataforma Virtual E-Learning"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-4 left-4 bg-emerald-600/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow">
+                                <i class="fa-solid fa-circle-dot mr-1 animate-pulse"></i> En Vivo
+                            </div>
+                            <div
+                                class="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-xl">
+                                <i class="fa-brands fa-github mr-1.5"></i> Open Source
+                            </div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Plataforma virtual E-Learning
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                Plataforma de aprendizaje integral con gestión de cursos multimedia, exámenes
+                                interactivos, tareas con rúbricas de evaluación, chat en tiempo real y soporte multirol
+                                para Administradores, Docentes y Estudiantes.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">React</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">Tailwind
+                                    CSS</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">TypeScript</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">Vite</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-0 space-y-2.5">
+                        <a href="https://alexis-castro-academy.vercel.app" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3 rounded-xl bg-brand-600 text-white font-medium text-center hover:bg-brand-700 transition-colors shadow-md text-sm">
+                            <i class="fa-solid fa-arrow-up-right-from-square mr-2 text-xs"></i> Visitar Plataforma
+                        </a>
+                        <a href="https://github.com/Alexis645-tech/Plataforma-E-learning" target="_blank"
+                            rel="noopener noreferrer"
+                            class="block w-full py-2.5 rounded-xl bg-slate-900 dark:bg-slate-800 border border-transparent dark:border-slate-700 text-white font-medium text-center hover:bg-brand-600 dark:hover:bg-brand-600 transition-colors shadow-sm text-sm">
+                            <i class="fa-brands fa-github mr-2"></i> Ver código en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-800 flex flex-col justify-between group hover:shadow-xl transition-all duration-300">
+                    <div>
+                        <div class="h-64 bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+                            <img src="Img/explorer.jpeg" alt="Proyecto LMS OpenSource"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-xl">
+                                <i class="fa-brands fa-github mr-1.5"></i> Open Source
+                            </div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white">The Explorer</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                Juego 2D para móviles desarrollado en el motor gráfico Unity 3D junto con los assets del
+                                Game Kit 2D proporcionado por la empresa Unity Technologies. El prototipo desarrollado
+                                en esta investigación fue implementado en la Unidad Educativa Particular “Hermano
+                                Miguel” de la ciudad de Machala, con la participación de 19 estudiantes del curso 9no
+                                EGB “B” y el docente Institucional encargado de la asignatura de Ciencias Naturales.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">Unity</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">C#</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">HLSL</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">Shader
+                                    Lab</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-0">
+                        <a href="https://github.com/Alexis645-tech/Tesis-2D" target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-3.5 rounded-xl bg-slate-900 dark:bg-slate-800 border border-transparent dark:border-slate-700 text-white font-medium text-center hover:bg-brand-600 dark:hover:bg-brand-600 transition-colors shadow-sm text-sm">
+                            <i class="fa-brands fa-github mr-2"></i> Ver código en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-800 flex flex-col justify-between group hover:shadow-xl transition-all duration-300">
+                    <div>
+                        <div class="h-64 bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+                            <img src="Img/web.jpeg" alt="Proyecto Metrics Tool"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-xl">
+                                <i class="fa-brands fa-github mr-1.5"></i> Open Source
+                            </div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Repositorio web para Lengua de
+                                señas y Braille</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                Mediante la implementación del proyecto de investigación el mismo que tiene la finalidad
+                                de servir como un repositorio con herramientas digitales y cursos para aprender lenguaje
+                                de señas y braille, busca lograr que los docentes de la Institución logren interés por
+                                desarrollar estas habilidades con estos lenguajes para favorecer el proceso comunicativo
+                                con las personas que tienen este tipo de discapacidad.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">HTML</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">CSS</span>
+                                <span
+                                    class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-transparent dark:border-slate-700 text-xs font-medium">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-0">
+                        <a href="https://github.com/Alexis645-tech/Proyecto-Integrador-de-Saberes" target="_blank"
+                            rel="noopener noreferrer"
+                            class="block w-full py-3.5 rounded-xl bg-slate-900 dark:bg-slate-800 border border-transparent dark:border-slate-700 text-white font-medium text-center hover:bg-brand-600 dark:hover:bg-brand-600 transition-colors shadow-sm text-sm">
+                            <i class="fa-brands fa-github mr-2"></i> Ver código en GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto"
+        class="py-24 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <!-- Contact Info -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span
+                        class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-wider">Hablemos</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        ¿Tienes alguna duda o propuesta?</h2>
+                    <p class="text-slate-600 dark:text-slate-300 text-base leading-relaxed">
+                        Estoy disponible para conferencias, asesorías académicas en desarrollo web, consultoría en
+                        e-learning y proyectos de investigación tecnológica.
+                    </p>
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center space-x-4">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0 font-bold text-lg">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Correo Electrónico
+                                    Profesional</p>
+                                <p class="text-sm font-bold text-slate-800 dark:text-white">castroalexis645@gmail.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0 font-bold text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Ubicación</p>
+                                <p class="text-sm font-bold text-slate-800 dark:text-white">Cuenca, Ecuador / Global
+                                    Online</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div
+                    class="lg:col-span-7 bg-slate-50 dark:bg-slate-800/60 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm relative transition-colors">
+                    <form id="contact-form" class="space-y-6" onsubmit="handleContactSubmit(event)"
+                        action="https://formsubmit.co/ajax/castroalexis645@gmail.com" method="POST">
+                        
+                        <!-- Parámetros de configuración para FormSubmit -->
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_subject" value="Nuevo mensaje desde tu Web Personal">
+                        <!-- Campo trampa antispam (honeypot) para bots -->
+                        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="nombre"
+                                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Nombre
+                                    completo</label>
+                                <input type="text" id="nombre" name="nombre" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent transition-all"
+                                    placeholder="Tu nombre">
+                            </div>
+                            <div>
+                                <label for="email"
+                                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Correo
+                                    electrónico</label>
+                                <input type="email" id="email" name="email" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent transition-all"
+                                    placeholder="tucorreo@ejemplo.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="asunto"
+                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Asunto</label>
+                            <input type="text" id="asunto" name="asunto" required
+                                class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent transition-all"
+                                placeholder="Ej: Consulta sobre curso o asesoría">
+                        </div>
+                        <div>
+                            <label for="mensaje"
+                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Mensaje</label>
+                            <textarea id="mensaje" name="mensaje" rows="4" required
+                                class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent transition-all"
+                                placeholder="Escribe tu mensaje aquí..."></textarea>
+                        </div>
+
+                        <!-- Sección del Botón y Casilla de Privacidad -->
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
+                            <!-- Casilla de Privacidad -->
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="privacidad" name="privacidad" type="checkbox" required
+                                        class="w-4 h-4 text-brand-600 border-slate-300 dark:border-slate-600 dark:bg-slate-900 rounded focus:ring-brand-500 cursor-pointer">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="privacidad"
+                                        class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+                                        He leído y acepto la <button type="button" id="abrirPrivacidad"
+                                            class="text-brand-600 dark:text-brand-400 underline hover:text-brand-700 dark:hover:text-brand-300 transition-colors">Política
+                                            de Privacidad</button>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Botón de Envío -->
+                            <div class="sm:w-1/3">
+                                <button type="submit" id="submit-btn"
+                                    class="w-full py-4 rounded-xl bg-brand-600 text-white font-semibold text-center hover:bg-brand-700 transition-all shadow-lg shadow-brand-600/25 flex items-center justify-center gap-2 cursor-pointer">
+                                    <span>Enviar Mensaje</span>
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Mensaje de éxito -->
+                    <div id="form-success"
+                        class="hidden mt-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-sm font-medium text-center">
+                        <i class="fa-solid fa-circle-check mr-2"></i> ¡Mensaje enviado con éxito! Me pondré en contacto
+                        contigo pronto.
+                    </div>
+
+                    <!-- Mensaje de alerta / error -->
+                    <div id="form-error"
+                        class="hidden mt-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-sm font-medium">
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-exclamation text-amber-600 dark:text-amber-400 mt-0.5 shrink-0 text-base"></i>
+                            <div id="form-error-msg" class="leading-relaxed"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8 pb-8 border-b border-slate-800">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-md overflow-hidden"
+                        style="border-radius: 50%;">
+                        <img src="Img/Logo.jpeg" alt="Lic. Alexis Castro - Perfil Profesional"
+                            class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-lg font-bold text-white">Alexis Castro</span>
+                </div>
+                <!-- Secondary Navigation Links -->
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <a href="#inicio" class="hover:text-white transition-colors">Inicio</a>
+                    <a href="#sobre-mi" class="hover:text-white transition-colors">Sobre Mí</a>
+                    <a href="#libros" class="hover:text-white transition-colors">Libros</a>
+                    <a href="#cursos" class="hover:text-white transition-colors">Cursos</a>
+                    <a href="#proyectos" class="hover:text-white transition-colors">Proyectos</a>
+                    <a href="#contacto" class="hover:text-white transition-colors">Contacto</a>
+                </div>
+                <!-- Social Icons small -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://www.linkedin.com/in/alexis-castro-ba1384203/" target="_blank"
+                        rel="noopener noreferrer" aria-label="LinkedIn"
+                        class="w-9 h-9 rounded-lg bg-slate-800 text-slate-300 hover:bg-brand-600 hover:text-white flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-linkedin-in text-sm"></i>
+                    </a>
+                    <a href="https://instagram.com/alexiscastro_academy" target="_blank" rel="noopener noreferrer"
+                        aria-label="Instagram"
+                        class="w-9 h-9 rounded-lg bg-slate-800 text-slate-300 hover:bg-pink-600 hover:text-white flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-instagram text-sm"></i>
+                    </a>
+                    <a href="https://facebook.com/share/1E9YzjM4jB" target="_blank" rel="noopener noreferrer"
+                        aria-label="Facebook"
+                        class="w-9 h-9 rounded-lg bg-slate-800 text-slate-300 hover:bg-white hover:text-slate-900 flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-facebook text-sm"></i>
+                    </a>
+                    <a href="https://tiktok.com/@alexiscastro_academy" target="_blank" rel="noopener noreferrer"
+                        aria-label="TikTok"
+                        class="w-9 h-9 rounded-lg bg-slate-800 text-slate-300 hover:bg-white hover:text-slate-900 flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-tiktok text-sm"></i>
+                    </a>
+                    <a href="https://github.com/Alexis645-tech" target="_blank" rel="noopener noreferrer"
+                        aria-label="GitHub"
+                        class="w-9 h-9 rounded-lg bg-slate-800 text-slate-300 hover:bg-white hover:text-slate-900 flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-github text-sm"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Alexis Castro. Todos los derechos reservados.</p>
+                <div class="flex space-x-6">
+                    <!-- Botón para abrir el modal Legal -->
+                    <button id="abrirLegal" type="button"
+                        class="text-slate-400 hover:text-white transition-colors cursor-pointer">Aviso Legal</button>
+
+                    <!-- Estructura del modal dialog Legal -->
+                    <dialog id="Legal"
+                        class="max-w-2xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 shadow-2xl m-auto">
+                        <div
+                            class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-scale-balanced text-brand-600 dark:text-brand-400"></i> Aviso
+                                Legal
+                            </h2>
+                            <button id="cerrarLegal" type="button" aria-label="Cerrar modal"
+                                class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div
+                            class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed max-h-96 overflow-y-auto pr-2 space-y-3">
+                            <p><strong>Datos identificativos del titular:</strong> El titular de este sitio web es el
+                                docente capacitador independiente que opera bajo la marca comercial
+                                "alexiscastro_academy".<br>
+                                Nombre completo: Kevin Alexis Castro Prado.<br>
+                                Número de identificación fiscal (RUC): 0750354599001.<br>
+                                Domicilio profesional: Cuenca, Ecuador.<br>
+                                Correo electrónico de contacto: castroalexis645@gmail.com.</p>
+                            <p><strong>Objeto de la web:</strong> Este sitio web tiene como finalidad presentar al
+                                titular como una autoridad en su campo y ofrecer servicios de capacitación profesional.
+                                El sitio centraliza la oferta educativa para promover cursos de formación especializada,
+                                como el de "Gestión Administrativa y Análisis de Datos con Excel", el cual cuenta con un
+                                Certificado de Aprobación oficial con respaldo ministerial y código QR. Además, la
+                                página opera como un catálogo para enlazar a los estudiantes hacia la plataforma externa
+                                Hotmart (donde se publican y gestionan los cursos), hacia Amazon para la venta de sus 4
+                                libros publicados, y hacia GitHub para exhibir sus proyectos destacados.</p>
+                            <p><strong>Propiedad intelectual e industrial:</strong> Todos los materiales de esta página
+                                web, incluyendo el logotipo estructurado de "alexiscastro_academy", los textos, paleta
+                                de colores, infografías y vídeos, son de exclusiva propiedad del titular. Queda
+                                estrictamente prohibida la copia, reproducción, distribución o uso comercial sin permiso
+                                expreso de los materiales didácticos, así como de los códigos de los repositorios en
+                                GitHub, el contenido de los libros en Amazon y los módulos alojados en Hotmart.</p>
+                            <p><strong>Condiciones de uso del sitio:</strong> El usuario se compromete a navegar por el
+                                sitio web y a utilizar sus formularios respetando la legalidad vigente, el orden público
+                                y las buenas costumbres. No se permite el uso del sitio web con fines fraudulentos,
+                                ilícitos o para difundir software malicioso que pueda dañar la infraestructura técnica
+                                del titular.</p>
+                            <p><strong>Limitación de responsabilidad:</strong> El titular se reserva el derecho de
+                                interrumpir el acceso a la página web sin previo aviso por motivos técnicos o de
+                                mantenimiento, y no se hace responsable por los daños derivados de fallas de internet o
+                                de servidores ajenos a su control. Esto incluye explícitamente caídas de servicio,
+                                interrupciones o fallos en las plataformas de terceros con las que opera la web, como la
+                                pasarela de pagos de Hotmart, la plataforma de Amazon o los servidores de GitHub.</p>
+                            <p><strong>Legislación aplicable:</strong> Las presentes condiciones se rigen por el marco
+                                legal de la República del Ecuador. Cualquier conflicto legal o controversia que surja
+                                del uso de este sitio web se someterá a la jurisdicción de los tribunales competentes de
+                                dicho país.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+                            <button id="cerrarLegalBtn" type="button"
+                                class="px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-brand-600 text-white font-medium text-sm hover:bg-brand-600 dark:hover:bg-brand-500 transition-colors cursor-pointer">
+                                Entendido
+                            </button>
+                        </div>
+                    </dialog>
+
+                    <!-- Botón para abrir el modal Privacidad -->
+                    <button id="abrirPrivacidad2" type="button"
+                        class="text-slate-400 hover:text-white transition-colors cursor-pointer">Política de
+                        Privacidad</button>
+
+                    <!-- Estructura del modal dialog Privacidad -->
+                    <dialog id="Privacidad"
+                        class="max-w-2xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 shadow-2xl m-auto">
+                        <div
+                            class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-brand-600 dark:text-brand-400"></i> Política de
+                                Privacidad
+                            </h2>
+                            <button id="cerrarPrivacidad" type="button" aria-label="Cerrar modal"
+                                class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div
+                            class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed max-h-96 overflow-y-auto pr-2 space-y-3">
+                            <p><strong>Identidad del responsable:</strong> El responsable de la recolección, resguardo y
+                                tratamiento de los datos personales es Kevin Alexis Castro Prado (actuando bajo la
+                                identidad de "alexiscastro_academy"). Puedes ponerte en contacto directo a través del
+                                canal oficial de atención al titular de los datos en el correo:
+                                castroalexis645@gmail.com.</p>
+                            <p><strong>Qué datos recopilas:</strong> Para la prestación de nuestros servicios,
+                                recopilamos nombres completos, correos electrónicos y números de teléfono. También se
+                                pueden recopilar datos de navegación e interacción, y en caso de compras, los datos de
+                                facturación requeridos para procesar la transacción comercial.</p>
+                            <p><strong>Finalidad del tratamiento:</strong> Los datos personales se utilizarán para
+                                enviar los accesos al curso, aclarar dudas de los prospectos mediante conversaciones de
+                                WhatsApp Business, y entregar la certificación oficial. Asimismo, se utilizarán para
+                                mandar correos comerciales, cerrar matrículas y aplicar estrategias publicitarias de
+                                retargeting para volver a impactar a quienes visitaron el sitio o enviaron un mensaje.
+                            </p>
+                            <p><strong>Legitimación o base legal:</strong> El tratamiento de tus datos personales está
+                                basado en tu consentimiento expreso, libre, específico e informado, obtenido al marcar
+                                la casilla de aceptación no premarcada en nuestros formularios, en cumplimiento con la
+                                Ley Orgánica de Protección de Datos Personales (LOPDP).</p>
+                            <p><strong>Destinatarios de la información:</strong> Tus datos personales no serán vendidos
+                                a terceros. No obstante, compartimos tu información con proveedores técnicos y
+                                plataformas necesarias para nuestra infraestructura comercial independiente. Esto
+                                incluye a Hotmart como plataforma de educación y pasarela de pago, así como a
+                                herramientas del Administrador de Anuncios como Meta Business Suite (Facebook,
+                                Instagram) y TikTok for Business para la gestión publicitaria y análisis de clientes
+                                potenciales.</p>
+                            <p><strong>Derechos del usuario (Derechos ARCO):</strong> Como usuario, tienes derecho a
+                                acceder, rectificar, cancelar u oponerte al uso de tus datos personales. Para ejercer
+                                estos derechos, simplemente debes enviarnos un correo electrónico directo a la dirección
+                                de contacto indicada, adjuntando una copia de tu documento de identidad para verificar
+                                la solicitud.</p>
+                            <p><strong>Tiempo de conservación:</strong> Los datos personales proporcionados se
+                                conservarán durante el tiempo necesario para cumplir con la finalidad para la que fueron
+                                recabados, o durante el tiempo que dure la relación contractual del curso, y
+                                posteriormente, hasta que el usuario solicite explícitamente su baja, eliminación o
+                                revoque su consentimiento.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+                            <button id="cerrarPrivacidadBtn" type="button"
+                                class="px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-brand-600 text-white font-medium text-sm hover:bg-brand-600 dark:hover:bg-brand-500 transition-colors cursor-pointer">
+                                Entendido
+                            </button>
+                        </div>
+                    </dialog>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts de Funcionalidad: Tema Claro/Oscuro, Menú Móvil, Formulario y Modales -->
+    <script>
+        // ==========================================
+        // 1. GESTIÓN DEL TEMA (CLARO / OSCURO)
+        // ==========================================
+        const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+        function updateThemeIcons(isDark) {
+            document.querySelectorAll('.theme-toggle-dark-icon').forEach(icon => {
+                icon.classList.toggle('hidden', !isDark);
+            });
+            document.querySelectorAll('.theme-toggle-light-icon').forEach(icon => {
+                icon.classList.toggle('hidden', isDark);
+            });
+        }
+
+        function setTheme(theme, persist = true) {
+            document.documentElement.classList.add('theme-transition');
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                updateThemeIcons(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateThemeIcons(false);
+            }
+            if (persist) {
+                localStorage.setItem('theme', theme);
+            }
+            setTimeout(() => {
+                document.documentElement.classList.remove('theme-transition');
+            }, 350);
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark', true);
+        }
+
+        // Inicializar iconos según el estado inicial de la etiqueta <html>
+        const isInitialDark = document.documentElement.classList.contains('dark');
+        updateThemeIcons(isInitialDark);
+
+        if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
+        if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+
+        // Detectar cambio de preferencia en el sistema si el usuario no ha forzado una manualmente
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light', false);
+            }
+        });
+
+        // ==========================================
+        // 2. MENÚ MÓVIL
+        // ==========================================
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Cerrar menú móvil al hacer click en cualquier enlace interno
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // ==========================================
+        // 3. ENVÍO DE FORMULARIO DE CONTACTO (AJAX)
+        // ==========================================
+        async function handleContactSubmit(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const submitBtn = document.getElementById('submit-btn');
+            const successBox = document.getElementById('form-success');
+            const errorBox = document.getElementById('form-error');
+            const errorMsg = document.getElementById('form-error-msg');
+
+            if (!form.checkValidity()) {
+                return;
+            }
+
+            // Ocultar mensajes previos
+            if (errorBox) errorBox.classList.add('hidden');
+            if (successBox) successBox.classList.add('hidden');
+
+            // Deshabilitar botón durante el proceso
+            const originalBtnContent = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+            submitBtn.innerHTML = '<span>Enviando...</span> <i class="fa-solid fa-spinner animate-spin"></i>';
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: json
+                });
+
+                const result = await response.json();
+
+                if (response.ok && (result.success === "true" || result.success === true)) {
+                    if (successBox) successBox.classList.remove('hidden');
+                    form.reset();
+                    form.classList.add('hidden');
+                } else {
+                    let mensaje = result.message || "Hubo un problema al procesar el envío.";
+                    if (mensaje.includes("Activation") || mensaje.includes("activate")) {
+                        mensaje = "<strong>¡Acción requerida para tu cuenta de correo!</strong> FormSubmit ha enviado un mensaje de activación a tu Gmail (<code>castroalexis645@gmail.com</code>). Por favor, abre tu Gmail y pulsa el botón <em>'Activate Form'</em> (sólo se hace una única vez). A partir de ese momento, todos los mensajes llegarán directamente a tu bandeja.";
+                    } else if (mensaje.includes("web server") || mensaje.includes("HTML files")) {
+                        mensaje = "<strong>Nota de entorno:</strong> FormSubmit requiere que la página esté ejecutándose desde un servidor web (por ejemplo, con la extensión <em>Live Server</em> en VS Code, o una vez subida a Vercel, Netlify o GitHub Pages), no como archivo estático abierto directamente con <code>file://</code>.";
+                    }
+                    throw new Error(mensaje);
+                }
+            } catch (error) {
+                console.error(error);
+                if (errorBox && errorMsg) {
+                    errorMsg.innerHTML = error.message.startsWith('<strong>') ? error.message : `Hubo un error al procesar el envío: ${error.message}`;
+                    errorBox.classList.remove('hidden');
+                } else {
+                    alert(error.message);
+                }
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.innerHTML = originalBtnContent;
+            }
+        }
+
+        // ==========================================
+        // 4. MODALES DIALOG (AVISO LEGAL & PRIVACIDAD)
+        // ==========================================
+        const modalLegal = document.getElementById('Legal');
+        const btnAbrirLegal = document.getElementById('abrirLegal');
+        const btnCerrarLegal = document.getElementById('cerrarLegal');
+        const btnCerrarLegal2 = document.getElementById('cerrarLegalBtn');
+
+        if (modalLegal && btnAbrirLegal) {
+            btnAbrirLegal.addEventListener('click', () => modalLegal.showModal());
+            if (btnCerrarLegal) btnCerrarLegal.addEventListener('click', () => modalLegal.close());
+            if (btnCerrarLegal2) btnCerrarLegal2.addEventListener('click', () => modalLegal.close());
+            modalLegal.addEventListener('click', (e) => {
+                const rect = modalLegal.getBoundingClientRect();
+                if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+                    modalLegal.close();
+                }
+            });
+        }
+
+        const modalPriv = document.getElementById('Privacidad');
+        const btnAbrirPriv1 = document.getElementById('abrirPrivacidad');
+        const btnAbrirPriv2 = document.getElementById('abrirPrivacidad2');
+        const btnCerrarPriv = document.getElementById('cerrarPrivacidad');
+        const btnCerrarPriv2 = document.getElementById('cerrarPrivacidadBtn');
+
+        if (modalPriv) {
+            if (btnAbrirPriv1) btnAbrirPriv1.addEventListener('click', () => modalPriv.showModal());
+            if (btnAbrirPriv2) btnAbrirPriv2.addEventListener('click', () => modalPriv.showModal());
+            if (btnCerrarPriv) btnCerrarPriv.addEventListener('click', () => modalPriv.close());
+            if (btnCerrarPriv2) btnCerrarPriv2.addEventListener('click', () => modalPriv.close());
+            modalPriv.addEventListener('click', (e) => {
+                const rect = modalPriv.getBoundingClientRect();
+                if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+                    modalPriv.close();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

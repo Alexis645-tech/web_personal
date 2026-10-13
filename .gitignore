@@ -1,0 +1,10 @@
+# Archivos del sistema operativo y temporales
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Entornos y dependencias (si aplica en el futuro)
+node_modules/
+.env
+.env.local
